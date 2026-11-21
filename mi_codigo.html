@@ -532,21 +532,40 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
 <style>.code-save-st{align-self:center;font-size:16px;font-weight:600;line-height:1.2}.code-save-st.pend{color:#9A3412}.code-save-st.ok{color:#047857}</style>
 <style>.mc .sim-head{flex-wrap:wrap;gap:8px}.mc-io{display:flex;gap:8px;margin-left:auto}.mc-io .btn-io{font:inherit;font-size:16px;font-weight:700;padding:6px 12px;border-radius:10px;border:2px solid #8DE2D6;background:transparent;color:#fff;cursor:pointer}.mc-io .btn-io:hover{background:#8DE2D6;color:#153244}.mc-io .btn-io:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}@media(max-width:1000px){#mi-codigo .sim-head .tag{display:none}}</style>
 <style>.mc-team{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:16px;font-weight:700;color:#153244}.mc-team input{font:inherit;font-size:17px;font-weight:600;padding:7px 10px;border:2px solid #79C7C3;border-radius:10px;width:100%;box-sizing:border-box;color:#153244}.mc-team input:focus-visible{outline:3px solid #FFCC00;outline-offset:1px}</style>
+<style>
+#mi-codigo .mcx{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:stretch;padding:12px 16px 14px}
+#mi-codigo .mcx .storage-note{grid-column:1/-1;margin:0}
+#mi-codigo .mcx-draw{display:grid;grid-template-columns:190px 230px;column-gap:16px;row-gap:8px;align-content:start}
+#mi-codigo .mcx-lab{margin:0;font-size:18px;line-height:24px;color:#153244;font-weight:400}
+#mi-codigo .mcx-lab strong{font-weight:700}
+#mi-codigo .code-thumbs{display:grid;gap:8px;align-content:start}
+#mi-codigo .code-thumb{padding:4px 8px;min-height:56px}
+#mi-codigo .code-thumb .ct-img{width:46px;height:46px;flex:0 0 46px}
+#mi-codigo .code-canvas{width:230px;max-width:none;height:230px}
+#mi-codigo .mcx-col{display:flex;flex-direction:column;gap:8px}
+#mi-codigo .mcx-col .btn{width:100%;justify-content:center;text-align:center;margin:0}
+#mi-codigo .mc-team{margin-top:4px}
+#mi-codigo .code-save-st{display:block;text-align:center;min-height:20px;font-size:16px}
+#mi-codigo .mcx-test{background:#F4FAF9;border:2px solid #D7EFEC;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+#mi-codigo .code-test-btns{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+#mi-codigo .code-board{width:100%;max-width:340px;margin:0}#mi-codigo .code-board svg{max-width:340px!important;width:100%;display:block}#mi-codigo .ct-empty{font-size:14px;line-height:1.1}
+#mi-codigo .code-out{width:100%;max-width:340px;box-sizing:border-box;margin:0;background:#fff;border:1px solid #D7EFEC;border-radius:12px;padding:7px 12px;font-size:16px;line-height:1.4;text-align:left}
+@media(max-width:1000px){#mi-codigo .code-test-btns .btn{font-size:16px;padding:8px 12px}#mi-codigo .mcx{gap:12px;padding:10px 12px 12px}#mi-codigo .mcx-draw{grid-template-columns:160px 200px;column-gap:12px}#mi-codigo .code-canvas{width:200px;height:200px}#mi-codigo .code-board,#mi-codigo .code-out{max-width:300px}#mi-codigo .code-board svg{max-width:300px!important}#mi-codigo .code-thumb .ct-name{font-size:16px}}@media(max-width:700px){#mi-codigo .mcx{grid-template-columns:1fr}}
+</style>
 <section class="mc" id="mi-codigo" aria-labelledby="mi-codigo-t">
     <div class="sim-head"><h3 id="mi-codigo-t">Creador de misiones · Mi código</h3><span class="mc-io"><button type="button" class="btn-io" data-t="descargar">Descargar código</button><button type="button" class="btn-io" data-t="cargar">Cargar código</button><input type="file" accept="image/png" hidden data-t="archivo" aria-label="Elegir la imagen del código"></span></div>
-    <div class="mc-inner code-layout">
+    <div class="mc-inner mcx">
       <p class="storage-note" data-storage-note hidden>Este navegador no permite guardar datos: el código y las misiones se conservan solo mientras la página esté abierta.</p>
-      <div class="code-left"><div class="code-thumbs" role="tablist" aria-label="Espacios del código"></div><label class="mc-team"><span>Nombre del equipo</span><input type="text" maxlength="40" data-t="equipo" autocomplete="off" placeholder="Ej.: Los Robots"></label></div>
-      <div class="code-draw">
-        <p class="code-label">Espacio: <strong class="code-current">elijan uno de la lista</strong></p>
-        <canvas class="code-canvas" width="240" height="240" role="img" aria-label="Espacio para dibujar el símbolo"></canvas>
-        <div class="slot-tools"><button type="button" class="btn btn-outline btn-sm" data-t="borrar">Borrar dibujo</button><button type="button" class="btn btn-primary btn-sm" data-t="guardar">Guardar código</button><span class="code-save-st" aria-live="polite"></span></div>
+      <div class="mcx-draw">
+        <p class="mcx-lab"><strong>Espacios</strong></p>
+        <p class="mcx-lab code-label">Espacio: <strong class="code-current">ninguno</strong></p>
+        <div class="mcx-col"><div class="code-thumbs" role="tablist" aria-label="Espacios del código"></div><label class="mc-team"><span>Nombre del equipo</span><input type="text" maxlength="40" data-t="equipo" autocomplete="off" placeholder="Ej.: Los Robots"></label></div>
+        <div class="mcx-col code-draw"><canvas class="code-canvas" width="240" height="240" role="img" aria-label="Espacio para dibujar el símbolo"></canvas><button type="button" class="btn btn-outline btn-sm" data-t="borrar">Borrar dibujo</button><button type="button" class="btn btn-primary btn-sm" data-t="guardar">Guardar código</button><span class="code-save-st" aria-live="polite"></span></div>
       </div>
-      <div class="code-test">
-        <div class="code-test-btns" style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="btn btn-primary btn-sm" data-t="probar">Probar este espacio</button><button type="button" class="btn btn-secondary btn-sm" data-mini-reset>Volver el robot a su lugar</button></div>
+      <div class="mcx-test code-test">
+        <div class="code-test-btns"><button type="button" class="btn btn-primary btn-sm" data-t="probar">Probar este espacio</button><button type="button" class="btn btn-secondary btn-sm" data-mini-reset>Volver el robot a su lugar</button></div>
         <div class="code-board"></div>
-        <div class="code-out" aria-live="polite">Elijan un espacio y toquen «Probar este espacio» para ver qué acción ejecuta el sistema.</div>
-        
+        <div class="code-out" aria-live="polite">Elijan un espacio y toquen «Probar este espacio».</div>
       </div>
     </div>
   </section>
@@ -780,7 +799,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       thumbs.innerHTML='';
       MC.ACC.forEach(function(a,i){
         var b=document.createElement('button');b.type='button';b.className='code-thumb';b.setAttribute('role','tab');b.setAttribute('aria-selected',String(a===sel));b.tabIndex=(a===sel||(!sel&&i===0))?0:-1;
-        b.innerHTML='<span class="ct-img">'+(draft[a]?'<img src="'+draft[a]+'" alt="">':'<span class="ct-empty">sin dibujo</span>')+'</span><span class="ct-name">'+MC.ACC_TXT[a]+'</span>';
+        b.innerHTML='<span class="ct-img">'+(draft[a]?'<img src="'+draft[a]+'" alt="">':'<span class="ct-empty">vacío</span>')+'</span><span class="ct-name">'+MC.ACC_TXT[a]+'</span>';
         b.setAttribute('aria-label','Espacio '+MC.ACC_TXT[a]+(draft[a]?' (con dibujo)':' (sin dibujo)'));
         b.addEventListener('click',function(){select(a);});
         b.addEventListener('keydown',function(e){var to=null;if(e.key==='ArrowDown'||e.key==='ArrowRight')to=(i+1)%4;else if(e.key==='ArrowUp'||e.key==='ArrowLeft')to=(i+3)%4;if(to!==null){e.preventDefault();select(MC.ACC[to]);thumbs.children[to].focus();}});
@@ -788,7 +807,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       });
     }
     function paint(){ctx.fillStyle='#fff';ctx.fillRect(0,0,240,240);var d=draft[sel];if(d){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,240,240);};im.src=d;}}
-    function select(a){sel=a;nameEl.textContent=a?MC.ACC_TXT[a]:'elijan uno de la lista';cv.setAttribute('aria-label','Espacio para dibujar el símbolo de: '+MC.ACC_TXT[a]);var i=MC.ACC.indexOf(a);if(prevB)prevB.disabled=i===0;if(nextB)nextB.disabled=i===3;renderThumbs();paint();}
+    function select(a){sel=a;nameEl.textContent=a?MC.ACC_TXT[a]:'ninguno';cv.setAttribute('aria-label','Espacio para dibujar el símbolo de: '+MC.ACC_TXT[a]);var i=MC.ACC.indexOf(a);if(prevB)prevB.disabled=i===0;if(nextB)nextB.disabled=i===3;renderThumbs();paint();}
     var drawing=false,last=null;var saveB=host.querySelector('[data-t="guardar"]'),saveSt=host.querySelector('.code-save-st');function setDirty(v){dirty=v;if(saveSt){saveSt.textContent=v?'Hay cambios sin guardar.':'Código guardado.';saveSt.className='code-save-st '+(v?'pend':'ok');}}if(saveB)saveB.addEventListener('click',function(){MC.ACC.forEach(function(a){st.codigo[a]=draft[a];});MC.save();setDirty(false);});if(MC.ACC.some(function(a){return draft[a];}))setDirty(false);
     (function(){var teamIn=host.querySelector('[data-t="equipo"]'),TK='stemplus.micodigo.equipo';if(teamIn){try{teamIn.value=localStorage.getItem(TK)||'';}catch(e){}teamIn.addEventListener('input',function(){try{localStorage.setItem(TK,teamIn.value);}catch(e){}});}
       function team(){return teamIn?teamIn.value.replace(/\s+/g,' ').trim():'';}
@@ -838,10 +857,10 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       if(mini.busy||!sel)return;mini.busy=true;var a=sel;
       mini.run([{a:a,n:1}],function(){},function(r){mini.busy=false;mini.draw();
         var accion={AVANZAR:'avanzar una casilla',GIRAR_DERECHA:'girar a la derecha',GIRAR_IZQUIERDA:'girar a la izquierda',DETENER:'detenerse (el robot no se mueve)'}[a];
-        out.innerHTML='<span class="q">Entrada:</span> se tocó el símbolo ubicado en el espacio «'+MC.ACC_TXT[a]+'».<br><span class="q">Acción ejecutada:</span> '+accion+(r.error?' — no se completó: '+r.error:'')+'. El sistema ejecuta la acción asociada al espacio, no la del dibujo.';
+        out.innerHTML='<span class="q">Entrada:</span> se tocó «'+MC.ACC_TXT[a]+'».<br><span class="q">Acción:</span> '+accion+(r.error?' (no se completó: '+r.error+')':'')+'.<br>Importa el espacio, no el dibujo.';
       },true);
     });
-    host.querySelector('[data-mini-reset]').addEventListener('click',function(){mini.reset();out.textContent='Elijan un espacio y toquen «Probar este espacio» para ver qué acción ejecuta el sistema.';});
+    host.querySelector('[data-mini-reset]').addEventListener('click',function(){mini.reset();out.textContent='Elijan un espacio y toquen «Probar este espacio».';});
     MC.onChange(function(){renderThumbs();if(!drawing)paint();});
     select(null);
   })();
