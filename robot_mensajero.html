@@ -155,7 +155,7 @@ img{max-width:100%}
 .input-row input{flex:1;min-width:0;font:inherit;font-size:22px;padding:12px 14px;border:2px solid var(--azul);border-radius:12px;background:#fff}
 .mic-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .mic-btn{width:56px;height:56px;border-radius:50%;border:3px dashed #94a3b8;background:#f1f5f9;display:grid;place-items:center;cursor:not-allowed;color:#64748b}
-.mic-btn svg{width:26px;height:26px}
+.mic-btn svg{width:26px;height:26px}.mic-btn{border:3px solid #153244;background:#fff;color:#153244;cursor:pointer;transition:background .15s}.mic-btn:hover{background:#8DE2D6}.mic-btn:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}.mic-btn.listening{background:#FFCC00;animation:micpulse 1.2s ease-out infinite}.mic-btn:disabled{border:3px dashed #94a3b8;background:#f1f5f9;color:#94a3b8;cursor:not-allowed}/*rm2*/.sim-controls{flex-wrap:nowrap}.board-legend{flex-wrap:nowrap}@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(255,204,0,.65)}100%{box-shadow:0 0 0 16px rgba(255,204,0,0)}}@media(prefers-reduced-motion:reduce){.mic-btn.listening{animation:none}}#cmd.listening{border-color:#FFCC00;background:#FFFBEA}#cmd::placeholder{color:#64748b}.src-voz{font-size:.85em;color:#475569;font-style:normal}
 .mic-note{font-size:17px;color:#475569;line-height:1.45;flex:1;min-width:180px}
 .mic-note strong{color:var(--azul)}
 
@@ -296,7 +296,7 @@ table.hist .empty-row td{color:#94a3b8;font-style:italic;text-align:center}
 .sym-fallback{display:flex;align-items:center;justify-content:center;width:64px;height:64px;font-size:16px;font-weight:700;line-height:1.1;text-align:center;color:var(--azul);background:#f1f5f9;border-radius:8px;padding:2px}
 .mc-board{display:block;width:100%;height:auto;background:#f4fbfa;border-radius:14px;border:3px solid var(--azul)}
 .mc-board .cell{fill:#f4fbfa;stroke:var(--verde2);stroke-width:2}
-.mc-board .obst{fill:var(--azul)}
+.mc-board .obst{fill:var(--azul)}.mc-board.num{background:transparent;border:0;border-radius:0}.mc-board .coord{font-family:Archivo,Arial,sans-serif;font-weight:700;font-size:30px;fill:#153244}
 .mc-char{transition:transform .38s ease-in-out}
 .mc-char.bump{animation:bump .35s}
 .mc-play{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
@@ -418,7 +418,7 @@ table.hist .empty-row td{color:#94a3b8;font-style:italic;text-align:center}
 .input-row{align-items:center}
 .input-row .mic-btn{flex-shrink:0}
 .mic-note{margin:4px 0 0;min-width:0}
-.board-legend{flex-wrap:nowrap;white-space:nowrap;overflow:hidden;font-size:16px}
+.board-legend{flex-wrap:nowrap;white-space:nowrap;font-size:16px;gap:12px}
 @media(max-width:1000px){.board-legend{display:none}.stage .val{font-size:17px}.board-status{font-size:16px}}
 .label-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;margin-bottom:4px}
 .label-row label{margin:0}
@@ -563,11 +563,11 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
         </div>
         <p class="board-status" id="board-status" aria-live="polite"></p>
         <div class="sim-controls">
-          <button type="button" class="btn btn-secondary" id="btn-reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Reiniciar misión</button>
-          <button type="button" class="btn btn-secondary" id="btn-repeat" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Repetir indicación</button>
+          <button type="button" class="btn btn-secondary" id="btn-reset" aria-label="Reiniciar la misión"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Reiniciar</button>
+          <button type="button" class="btn btn-secondary" id="btn-repeat" disabled aria-label="Repetir la última indicación"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Repetir</button>
         </div>
         <div class="board-legend" aria-hidden="true">
-          <span><svg width="20" height="20" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="4" fill="#FFCC00" stroke="#153244" stroke-width="2"/><path d="M10 0 L14 5 L6 5Z" fill="#153244"/></svg>Robot (▲ hacia dónde mira)</span>
+          <span><svg width="20" height="20" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="4" fill="#FFCC00" stroke="#153244" stroke-width="2"/><path d="M10 0 L14 5 L6 5Z" fill="#153244"/></svg>Robot</span>
           <span><svg width="20" height="20" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="4" fill="#8DE2D6" stroke="#153244" stroke-width="2"/><path d="M6 14V5h7l-2 3 2 3H8" fill="none" stroke="#153244" stroke-width="2"/></svg>Destino</span>
           <span><svg width="20" height="20" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="3" fill="#153244"/></svg>Obstáculo</span>
         </div>
@@ -575,13 +575,13 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
 
       <div class="input-area">
         <form id="cmd-form" autocomplete="off">
-          <div class="label-row"><label for="cmd">Indicación para el robot</label><p class="mic-note" id="mic-note"><strong>Micrófono: pendiente.</strong> Por ahora se escribe.</p></div>
+          <div class="label-row"><label for="cmd">Indicación para el robot</label></div>
           <div class="input-row">
-            <button type="button" class="mic-btn" aria-disabled="true" aria-describedby="mic-note" id="mic-btn" title="Micrófono no disponible en esta versión">
+            <button type="button" class="mic-btn" id="mic-btn" aria-pressed="false" title="Decir la indicación con el micrófono">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8 21h8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-              <span class="sr-only">Micrófono (no disponible en esta versión)</span>
+              <span class="sr-only">Decir la indicación con el micrófono</span>
             </button>
-            <input id="cmd" name="cmd" type="text" maxlength="120" aria-describedby="mic-note" spellcheck="false">
+            <input id="cmd" name="cmd" type="text" maxlength="120" spellcheck="false" placeholder="Escriban la indicación o toquen el micrófono">
             <button type="submit" class="btn btn-primary" id="send">Enviar</button>
           </div>
         </form>
@@ -598,7 +598,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
 
     <div class="history" id="sv-hist" role="tabpanel" aria-labelledby="sv-tab-hist" hidden>
       <div class="hist-head"><h4>Historial de pruebas en pantalla</h4><button type="button" class="btn btn-outline btn-sm" id="btn-clear">Borrar el historial</button></div>
-      <p class="note">Sirve para comparar lo que pasó en cada prueba. <strong>No reemplaza la ficha «Registro de primeras pruebas»</strong>, que se completa en papel.</p>
+      
       <div class="table-wrap">
         <table class="hist">
           <caption class="sr-only">Historial de indicaciones enviadas al robot</caption>
@@ -639,7 +639,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
   (function(){var gx=DEST.x*CELL,gy=DEST.y*CELL;
     destG.appendChild(el('rect',{x:gx+6,y:gy+6,width:CELL-12,height:CELL-12,rx:14,fill:'#8DE2D6',stroke:'#153244','stroke-width':4}));
     destG.appendChild(el('path',{d:'M'+(gx+36)+' '+(gy+80)+'V'+(gy+22)+'h34l-9 13 9 13h-34',fill:'#FFCC00',stroke:'#153244','stroke-width':4,'stroke-linejoin':'round'}));
-    var t=el('text',{x:gx+50,y:gy+95,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#153244','font-family':'Archivo,Arial'});t.textContent='DESTINO';destG.appendChild(t);
+    
   })();
   var rotDeg=0;
   function draw(){
@@ -743,11 +743,11 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
   }
   function addSeparator(txt){var tb=document.getElementById('hist-body');if(tb.querySelector('.empty-row'))return;var tr=document.createElement('tr');tr.className='sep';tr.innerHTML='<td colspan="4">'+esc(txt)+'</td>';tb.appendChild(tr);}
 
-  function send(raw){
+  function send(raw,src){
     if(st.busy||st.arrived)return;
     var r=interpret(raw);
     var shown=raw.trim();
-    setStage('st-in',null,shown?'<span class="q">“'+esc(shown)+'”</span>':'<em>(vacía)</em>');
+    setStage('st-in',null,shown?'<span class="q">“'+esc(shown)+'”</span>'+(src==='voz'?' <span class="src-voz">(por micrófono)</span>':''):'<em>(vacía)</em>');
     var rule='<span class="badge t-'+r.tipo+'">'+TIPO_TXT[r.tipo]+'</span> '+esc(r.regla);
     setStage('st-rule',r.tipo,rule);
     attempt++;
@@ -786,10 +786,26 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
   document.getElementById('btn-clear').addEventListener('click',function(){
     history=[];attempt=0;round=1;document.getElementById('hist-body').innerHTML='<tr class="empty-row"><td colspan="4">Aún no hay pruebas.</td></tr>';
   });
-  // Mic: sin funcionalidad en el piloto (pendiente con el desarrollador)
-  document.getElementById('mic-btn').addEventListener('click',function(){
-    var n=document.getElementById('mic-note');n.style.background='#fff5cc';n.style.borderRadius='8px';n.style.padding='4px 8px';input.focus();
-  });
+  // Micrófono: reconocimiento de voz del navegador (Chrome/Edge; requiere permiso)
+  (function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition,micB=document.getElementById('mic-btn'),PH=input.placeholder,rec=null,listening=false,err='';
+    function ph(t,ms){input.placeholder=t;if(ms)setTimeout(function(){if(!listening)input.placeholder=PH;},ms);}
+    if(!SR){micB.disabled=true;micB.title='Este navegador no permite dictar: escriban la indicación.';micB.querySelector('.sr-only').textContent='Micrófono no disponible en este navegador';return;}
+    micB.addEventListener('click',function(){
+      if(listening){try{rec.stop();}catch(e){}return;}
+      if(st.busy||st.arrived)return;
+      rec=new SR();rec.lang='es-AR';rec.interimResults=true;rec.maxAlternatives=1;rec.continuous=false;
+      var fin='';err='';
+      rec.onstart=function(){listening=true;micB.classList.add('listening');micB.setAttribute('aria-pressed','true');input.classList.add('listening');input.value='';ph('Escuchando… digan la indicación');};
+      rec.onresult=function(e){var t='';fin='';for(var i=0;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=e.results[i][0].transcript;}input.value=t;};
+      rec.onerror=function(e){err=(e.error==='not-allowed'||e.error==='service-not-allowed')?'El navegador no dio permiso para el micrófono: escriban la indicación.':(e.error==='no-speech'?'No se escuchó ninguna indicación. Prueben de nuevo.':'No se pudo usar el micrófono: escriban la indicación.');};
+      rec.onend=function(){listening=false;micB.classList.remove('listening');micB.setAttribute('aria-pressed','false');input.classList.remove('listening');
+        var said=(fin||input.value).trim();
+        if(said){input.placeholder=PH;input.value=said;setTimeout(function(){send(said,'voz');},700);}
+        else{input.value='';ph(err||'No se escuchó ninguna indicación. Prueben de nuevo.',4500);}};
+      try{rec.start();}catch(e){ph('No se pudo usar el micrófono: escriban la indicación.',4500);}
+    });
+  })();
 
   // Exponer para pruebas automatizadas (sin efecto en el uso normal)
   window.__robot={interpret:interpret,state:st,history:function(){return history.slice();},send:send,reset:reset};
