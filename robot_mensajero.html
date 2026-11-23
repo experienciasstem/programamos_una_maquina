@@ -801,9 +801,13 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       modal.querySelector('[data-mm="ok"]').focus();}
     function showDenied(){showModal('El micrófono está bloqueado','<p>Para activarlo, toquen el <strong>candado</strong> que aparece a la izquierda de la dirección de la página, elijan <strong>Micrófono: Permitir</strong> y vuelvan a cargar la página.</p><p>Mientras tanto, pueden escribir la indicación.</p>','Entendido',function(){input.focus();},false);}
     function askFirst(go){showModal('Permiso para usar el micrófono','<p>El navegador va a mostrar un aviso arriba de la pantalla.</p><p>Toquen <strong>Permitir</strong> para que el robot pueda recibir la indicación por el micrófono.</p>','Continuar',go,true);}
+    var inFrame=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
+    function inFrameBlocked(){return inFrame&&document.featurePolicy&&document.featurePolicy.allowsFeature&&!document.featurePolicy.allowsFeature('microphone');}
+    function showFrame(){showModal('Abran el simulador aparte','<p>Dentro de esta página el navegador no deja usar el micrófono.</p><p>Toquen <strong>Abrir en pestaña nueva</strong>: ahí el navegador va a pedir permiso. Para volver, cierren esa pestaña.</p>','Abrir en pestaña nueva',function(){var w=window.open(location.href,'_blank');if(!w)ph('El navegador no dejó abrir otra pestaña: escriban la indicación.',5000);},true);}
     function withPermission(go){
+      if(inFrameBlocked()){showFrame();return;}
       if(!navigator.permissions||!navigator.permissions.query){askFirst(go);return;}
-      navigator.permissions.query({name:'microphone'}).then(function(p){if(p.state==='granted')go();else if(p.state==='denied')showDenied();else askFirst(go);},function(){askFirst(go);});
+      navigator.permissions.query({name:'microphone'}).then(function(p){if(p.state==='granted')go();else if(p.state==='denied'){if(inFrame)showFrame();else showDenied();}else askFirst(go);},function(){askFirst(go);});
     }
     micB.addEventListener('click',function(){
       if(listening){try{rec.stop();}catch(e){}return;}
@@ -819,7 +823,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       rec.onend=function(){listening=false;micB.classList.remove('listening');micB.setAttribute('aria-pressed','false');input.classList.remove('listening');
         var said=(fin||input.value).trim();
         if(said){input.placeholder=PH;input.value=said;setTimeout(function(){send(said,'voz');},700);}
-        else{input.value='';ph(err||'No se escuchó ninguna indicación. Prueben de nuevo.',4500);if(denied)showDenied();}};
+        else{input.value='';ph(err||'No se escuchó ninguna indicación. Prueben de nuevo.',4500);if(denied){if(inFrame)showFrame();else showDenied();}}};
       try{rec.start();}catch(e){ph('No se pudo usar el micrófono: escriban la indicación.',4500);}
     }
   })();
