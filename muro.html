@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muro de códigos · Experiencias STEM+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Archivo,Arial,sans-serif;background:#F8FAFC;color:#153244}
+header{background:#153244;color:#FFCC00;padding:18px 24px;border-bottom:6px solid #8DE2D6}header h1{margin:0;font-size:28px}header p{margin:4px 0 0;color:#fff;font-size:17px}
+main{max-width:1100px;margin:0 auto;padding:20px 24px 40px}
+.caja{background:#fff;border:2px solid #D7EFEC;border-radius:16px;padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:18px}
+.caja h2{width:100%;margin:0;font-size:21px}.caja p.txt{width:100%;margin:0;font-size:18px;line-height:1.45}
+label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:16px}
+input[type=text]{font:inherit;font-size:18px;padding:8px 10px;border:2px solid #79C7C3;border-radius:10px;min-width:240px}
+input.codigo{text-transform:uppercase;letter-spacing:.2em;min-width:170px;width:170px;font-weight:700}
+.btn{font:inherit;font-weight:700;font-size:17px;border-radius:12px;padding:10px 16px;cursor:pointer;border:2px solid #153244;background:#fff;color:#153244;text-decoration:none;display:inline-block;text-align:center}
+.btn.pri{background:#153244;color:#fff}.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}
+.msg{width:100%;min-height:1.3em;margin:0;font-weight:700;font-size:17px}.ok{color:#047857}.bad{color:#B42318}
+.archivo{font-size:16px;color:#475569}
+.cod{display:flex;flex-wrap:wrap;align-items:center;gap:14px;background:#FFF7CC;border-radius:14px;padding:12px 16px;margin-bottom:18px}
+.cod span{font-size:18px}.cod b{font-size:34px;letter-spacing:.18em}
+h2.t{font-size:22px;margin:26px 0 10px;display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:#fff;border:2px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.card img{width:100%;border-radius:8px;border:1px solid #E2E8F0}
+.card b{font-size:19px}.card small{color:#64748b;font-size:15px}
+.vacio{color:#64748b;font-size:18px}
+.prueba{background:#FEE4E2;color:#7A271A;font-weight:700;padding:8px 24px;font-size:15px}
+[hidden]{display:none!important}
+</style></head>
+<body>
+<header><h1>Muro de códigos</h1><p>Experiencias STEM+ · ¿Qué pasa cuando programamos una máquina?</p></header>
+<div class="prueba" id="avisoPrueba" hidden>Modo prueba: los muros y códigos quedan guardados solo en este navegador.</div>
+<main>
+  <!-- INICIO -->
+  <section id="vInicio" hidden>
+    <div class="caja">
+      <h2>Entrar al muro de la clase</h2>
+      <label>Código del muro<input type="text" class="codigo" id="codEntrar" maxlength="6" autocomplete="off" placeholder="ABC123"></label>
+      <button type="button" class="btn pri" id="entrar">Entrar</button>
+      <p class="msg" id="msgEntrar" aria-live="polite"></p>
+    </div>
+    <div class="caja">
+      <h2>¿Es docente? Cree el muro de su clase</h2>
+      <p class="txt">Se crea un código para su clase. Escríbalo en el pizarrón: los equipos lo usan para entrar desde cualquier dispositivo.</p>
+      <label>Nombre de la clase<input type="text" id="nombreClase" maxlength="60" autocomplete="off" placeholder="Ej.: 2.º B · Escuela 12"></label>
+      <button type="button" class="btn" id="crear" disabled>Crear el muro de mi clase</button>
+      <p class="msg" id="msgCrear" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- MURO -->
+  <section id="vMuro" hidden>
+    <div class="cod"><span id="nomClase"></span><span>Código del muro:</span><b id="codMuro"></b><a class="btn" href="#" id="salir">Salir del muro</a></div>
+    <div class="caja" aria-labelledby="t-subir">
+      <h2 id="t-subir">Subir el código del equipo</h2>
+      <label>Nombre del equipo<input type="text" id="equipo" maxlength="40" autocomplete="off" placeholder="Ej.: Los Robots"></label>
+      <button type="button" class="btn" id="elegir">Elegir la imagen</button>
+      <input type="file" id="archivo" accept="image/png" hidden>
+      <span class="archivo" id="nombreArchivo">Ninguna imagen elegida</span>
+      <button type="button" class="btn pri" id="subir" disabled>Subir al muro</button>
+      <p class="msg" id="msg" aria-live="polite"></p>
+    </div>
+    <h2 class="t"><span>Códigos de la clase</span><button type="button" class="btn" id="actualizar">↻ Actualizar</button></h2>
+    <div class="grid" id="muro" aria-live="polite"></div>
+  </section>
+</main>
+
+<script type="module">
+/* ===== CONFIGURACIÓN: pegar aquí el objeto firebaseConfig del proyecto. Con null funciona en modo prueba. ===== */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDuu4LyV3E-2w2AMJtj-UMgNc4OK3GmauI",
+  authDomain: "muro-stem.firebaseapp.com",
+  projectId: "muro-stem",
+  storageBucket: "muro-stem.firebasestorage.app",
+  messagingSenderId: "194723732110",
+  appId: "1:194723732110:web:f5e7e0a91fe495019787df"
+};
+/* =========================================================================================================== */
+
+/* Carpeta de esta secuencia en Firebase (cambiar en cada secuencia nueva) */
+const SECUENCIA='programamos-una-maquina';
+const ALFA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')||'equipo';
+const limpiar=t=>String(t||'').replace(/\s+/g,' ').trim();
+const nuevoCodigo=()=>{const a=new Uint32Array(6);crypto.getRandomValues(a);return Array.from(a,n=>ALFA[n%ALFA.length]).join('');};
+const finDeAnio=()=>new Date(new Date().getFullYear(),11,31,23,59);
+
+/* ---------- Almacenamiento ---------- */
+let DB;
+if(FIREBASE_CONFIG){
+  const {initializeApp}=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+  const F=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+  const db=F.getFirestore(initializeApp(FIREBASE_CONFIG));
+  DB={
+    async crear(nombre){for(let i=0;i<5;i++){const id=nuevoCodigo();
+        try{await F.setDoc(F.doc(db,'secuencias',SECUENCIA,'muros',id),{nombre,creado:F.serverTimestamp(),expira:F.Timestamp.fromDate(finDeAnio())});return id;}catch(e){if(i===4)throw e;}}},
+    async leer(id){try{const s=await F.getDoc(F.doc(db,'secuencias',SECUENCIA,'muros',id));return s.exists()?s.data():null;}catch(e){if(e.code==='permission-denied')return null;throw e;}},
+    async subir(id,equipo,img){await F.setDoc(F.doc(db,'secuencias',SECUENCIA,'muros',id,'codigos',slug(equipo)),{equipo,img,fecha:F.serverTimestamp()});},
+    async listar(id){const q=await F.getDocs(F.collection(db,'secuencias',SECUENCIA,'muros',id,'codigos'));
+      return q.docs.map(d=>({...d.data(),slug:d.id,fecha:d.data().fecha?d.data().fecha.toDate():new Date()})).sort((a,b)=>b.fecha-a.fecha);}
+  };
+}else{
+  $('avisoPrueba').hidden=false;
+  const mem={};
+  const get=k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return mem[k]||null;}};
+  const set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){mem[k]=v;}};
+  DB={
+    async crear(nombre){const id=nuevoCodigo();set('muro_'+SECUENCIA+'_'+id,{nombre,codigos:{}});return id;},
+    async leer(id){return get('muro_'+SECUENCIA+'_'+id);},
+    async subir(id,equipo,img){const m=get('muro_'+SECUENCIA+'_'+id);m.codigos[slug(equipo)]={equipo,img,fecha:Date.now()};set('muro_'+SECUENCIA+'_'+id,m);},
+    async listar(id){const m=get('muro_'+SECUENCIA+'_'+id)||{codigos:{}};return Object.entries(m.codigos).map(([s,c])=>({...c,slug:s,fecha:new Date(c.fecha)})).sort((a,b)=>b.fecha-a.fecha);}
+  };
+}
+
+/* ---------- Navegación ---------- */
+let muroId=null;
+async function ruta(){
+  const id=(location.hash.slice(1)||'').toUpperCase();
+  if(!id){muroId=null;$('vMuro').hidden=true;$('vInicio').hidden=false;return;}
+  try{
+    const m=await DB.leer(id);
+    if(!m){location.hash='';$('msgEntrar').textContent='No encontramos un muro con ese código. Revisen las letras y los números.';$('msgEntrar').className='msg bad';return;}
+    muroId=id;$('codMuro').textContent=id;$('nomClase').textContent=m.nombre?m.nombre+' ·':'';
+    $('vInicio').hidden=true;$('vMuro').hidden=false;cargar();
+  }catch(e){$('msgEntrar').textContent='No se pudo abrir el muro. Revisen la conexión a internet.';$('msgEntrar').className='msg bad';}
+}
+window.addEventListener('hashchange',ruta);
+
+$('codEntrar').addEventListener('keydown',e=>{if(e.key==='Enter')$('entrar').click();});
+$('entrar').addEventListener('click',()=>{const c=$('codEntrar').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(c.length!==6){$('msgEntrar').textContent='El código tiene 6 letras y números.';$('msgEntrar').className='msg bad';return;}
+  $('msgEntrar').textContent='';location.hash=c;});
+$('nombreClase').addEventListener('input',()=>{$('crear').disabled=!limpiar($('nombreClase').value);});
+$('crear').addEventListener('click',async()=>{$('crear').disabled=true;$('msgCrear').textContent='Creando…';$('msgCrear').className='msg ok';
+  try{const id=await DB.crear(limpiar($('nombreClase').value));$('msgCrear').textContent='';location.hash=id;}
+  catch(e){$('msgCrear').textContent='No se pudo crear el muro. Prueben de nuevo.';$('msgCrear').className='msg bad';$('crear').disabled=false;}});
+$('salir').addEventListener('click',e=>{e.preventDefault();location.hash='';});
+
+/* ---------- Subir ---------- */
+let dato=null;const eq=$('equipo'),fin=$('archivo'),bSubir=$('subir'),msg=$('msg');
+const say=(t,ok)=>{msg.textContent=t;msg.className='msg '+(ok?'ok':'bad');};
+const listo=()=>{bSubir.disabled=!(dato&&limpiar(eq.value));};
+eq.addEventListener('input',listo);
+$('elegir').addEventListener('click',()=>fin.click());
+fin.addEventListener('change',()=>{const f=fin.files&&fin.files[0];fin.value='';dato=null;listo();if(!f)return;
+  $('nombreArchivo').textContent=f.name;
+  const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+      if(im.naturalWidth!==1120||im.naturalHeight!==430){say('Esa imagen no es un código descargado de «Mi código».',false);return;}
+      if(r.result.length>900000){say('La imagen es demasiado pesada.',false);return;}
+      dato=r.result;say('Imagen lista. Toquen «Subir al muro».',true);listo();};
+    im.onerror=()=>say('No se pudo leer la imagen.',false);im.src=r.result;};
+  r.readAsDataURL(f);});
+bSubir.addEventListener('click',async()=>{bSubir.disabled=true;say('Subiendo…',true);const n=limpiar(eq.value);
+  try{await DB.subir(muroId,n,dato);say('¡Listo! El código de «'+n+'» está en el muro.',true);dato=null;$('nombreArchivo').textContent='Ninguna imagen elegida';cargar();}
+  catch(e){say('No se pudo subir. Prueben de nuevo.',false);listo();}});
+
+/* ---------- Mostrar ---------- */
+async function cargar(){const m=$('muro');
+  try{const l=await DB.listar(muroId);m.innerHTML='';
+    if(!l.length){m.innerHTML='<p class="vacio">Todavía no hay códigos en el muro.</p>';return;}
+    l.forEach(c=>{const d=document.createElement('div');d.className='card';
+      const f=c.fecha.toLocaleString('es-AR',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
+      d.innerHTML='<img alt="Código del equipo '+esc(c.equipo)+'"><b>'+esc(c.equipo)+'</b><small>Subido el '+f+'</small>';
+      d.querySelector('img').src=c.img;
+      const a=document.createElement('a');a.className='btn pri';a.textContent='⬇ Descargar';a.href=c.img;a.download='codigo_'+c.slug+'.png';
+      d.appendChild(a);m.appendChild(d);});
+  }catch(e){m.innerHTML='<p class="vacio">No se pudo cargar el muro. Toquen «Actualizar».</p>';}}
+$('actualizar').addEventListener('click',cargar);
+ruta();
+</script>
+</body></html>
