@@ -534,7 +534,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
 #mi-codigo .pen-col:focus-visible,#mi-codigo .pen-w:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}
 #mi-codigo .pen-sep{width:1px;height:20px;background:#cbd5e1;flex:none}
 #mi-codigo .code-canvas{width:200px!important;height:200px!important}
-</style>
+/*lapiz2*/@media(max-width:1000px){#mi-codigo .pen-tools{gap:2px}#mi-codigo .pen-col,#mi-codigo .pen-w{width:20px;height:20px}#mi-codigo .pen-sep{display:none}}/*lapiz3*/#mi-codigo .pen-tools{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px!important;width:200px;max-width:100%}#mi-codigo .pen-col,#mi-codigo .pen-w{width:100%!important;height:auto!important;aspect-ratio:1}#mi-codigo .pen-sep{display:none!important}/*lapiz4*/#mi-codigo .pen-tools{display:flex!important;flex-direction:column;align-items:stretch;gap:5px!important;width:180px;max-width:100%}#mi-codigo .pen-row{display:flex;align-items:center;gap:5px}#mi-codigo .pen-lab{font-size:14px;font-weight:700;color:#153244;width:44px;flex:none}#mi-codigo .pen-col,#mi-codigo .pen-w{width:22px!important;height:22px!important;aspect-ratio:auto;flex:none}#mi-codigo .code-canvas{width:180px!important;height:180px!important}</style>
 </head>
 <body>
 <main class="sa">
@@ -566,15 +566,15 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
     <div class="mc-inner mcx">
       <p class="storage-note" data-storage-note hidden>Este navegador no permite guardar datos: el código y las misiones se conservan solo mientras la página esté abierta.</p>
       <div class="mcx-draw">
-        <p class="mcx-lab"><strong>Espacios</strong></p>
-        <p class="mcx-lab code-label">Espacio: <strong class="code-current">ninguno</strong></p>
-        <div class="mcx-col"><div class="code-thumbs" role="tablist" aria-label="Espacios del código"></div><label class="mc-team"><span>Nombre del equipo</span><input type="text" maxlength="40" data-t="equipo" autocomplete="off" placeholder="Ej.: Los Robots"></label></div>
-        <div class="mcx-col code-draw"><canvas class="code-canvas" width="480" height="480" role="img" aria-label="Espacio para dibujar el símbolo"></canvas><div class="pen-tools" role="group" aria-label="Color y grosor del lápiz"><button type="button" class="pen-col" data-col="#153244" style="background:#153244" aria-label="Color azul oscuro" title="Color azul oscuro" aria-pressed="true"></button><button type="button" class="pen-col" data-col="#D62828" style="background:#D62828" aria-label="Color rojo" title="Color rojo" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#2A9D8F" style="background:#2A9D8F" aria-label="Color verde" title="Color verde" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#F77F00" style="background:#F77F00" aria-label="Color naranja" title="Color naranja" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#6A4C93" style="background:#6A4C93" aria-label="Color violeta" title="Color violeta" aria-pressed="false"></button><span class="pen-sep" aria-hidden="true"></span><button type="button" class="pen-w" data-w="5" aria-label="Lápiz fino" title="Lápiz fino" aria-pressed="false"><i style="width:5px;height:5px"></i></button><button type="button" class="pen-w" data-w="10" aria-label="Lápiz medio" title="Lápiz medio" aria-pressed="true"><i style="width:10px;height:10px"></i></button><button type="button" class="pen-w" data-w="18" aria-label="Lápiz grueso" title="Lápiz grueso" aria-pressed="false"><i style="width:16px;height:16px"></i></button></div><button type="button" class="btn btn-outline btn-sm" data-t="borrar">Borrar dibujo</button><button type="button" class="btn btn-primary btn-sm" data-t="guardar">Guardar código</button><span class="code-save-st" aria-live="polite"></span></div>
+        <p class="mcx-lab"><strong>Acciones</strong></p>
+        <p class="mcx-lab code-label">Símbolo para: <strong class="code-current">ninguno</strong></p>
+        <div class="mcx-col"><div class="code-thumbs" role="tablist" aria-label="Acciones del código"></div><label class="mc-team"><span>Nombre del equipo</span><input type="text" maxlength="40" data-t="equipo" autocomplete="off" placeholder="Ej.: Los Robots"></label></div>
+        <div class="mcx-col code-draw"><canvas class="code-canvas" width="480" height="480" role="img" aria-label="Lienzo para dibujar el símbolo"></canvas><div class="pen-tools" role="group" aria-label="Color y grosor del lápiz"><div class="pen-row"><span class="pen-lab" aria-hidden="true">Color</span><button type="button" class="pen-col" data-col="#153244" style="background:#153244" aria-label="Color azul oscuro" title="Color azul oscuro" aria-pressed="true"></button><button type="button" class="pen-col" data-col="#D62828" style="background:#D62828" aria-label="Color rojo" title="Color rojo" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#2A9D8F" style="background:#2A9D8F" aria-label="Color verde" title="Color verde" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#F77F00" style="background:#F77F00" aria-label="Color naranja" title="Color naranja" aria-pressed="false"></button><button type="button" class="pen-col" data-col="#6A4C93" style="background:#6A4C93" aria-label="Color violeta" title="Color violeta" aria-pressed="false"></button></div><div class="pen-row"><span class="pen-lab" aria-hidden="true">Grosor</span><button type="button" class="pen-w" data-w="5" aria-label="Lápiz fino" title="Lápiz fino" aria-pressed="false"><i style="width:5px;height:5px"></i></button><button type="button" class="pen-w" data-w="10" aria-label="Lápiz medio" title="Lápiz medio" aria-pressed="true"><i style="width:10px;height:10px"></i></button><button type="button" class="pen-w" data-w="18" aria-label="Lápiz grueso" title="Lápiz grueso" aria-pressed="false"><i style="width:16px;height:16px"></i></button></div></div><button type="button" class="btn btn-outline btn-sm" data-t="borrar">Borrar dibujo</button><button type="button" class="btn btn-primary btn-sm" data-t="guardar">Guardar código</button><span class="code-save-st" aria-live="polite"></span></div>
       </div>
       <div class="mcx-test code-test">
-        <div class="code-test-btns"><button type="button" class="btn btn-primary btn-sm" data-t="probar">Probar este espacio</button><button type="button" class="btn btn-secondary btn-sm" data-mini-reset>Volver el robot a su lugar</button></div>
+        <div class="code-test-btns"><button type="button" class="btn btn-primary btn-sm" data-t="probar">Probar esta acción</button><button type="button" class="btn btn-secondary btn-sm" data-mini-reset>Volver el robot a su lugar</button></div>
         <div class="code-board"></div>
-        <div class="code-out" aria-live="polite">Toquen una acción de la lista “Espacios” y después “Probar este espacio”.</div>
+        <div class="code-out" aria-live="polite">Toquen una acción de la lista y después “Probar esta acción”.</div>
       </div>
     </div>
   </section>
@@ -582,7 +582,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
 <script>
   /* =====================================================================
      CREADOR DE MISIONES · núcleo compartido (D2 a D5 y archivos independientes)
-     El sistema no reconoce el significado de los dibujos: cada espacio está
+     El sistema no reconoce el significado de los dibujos: cada símbolo está
      asociado a una acción y se ejecuta lo previsto en su programación.
      ===================================================================== */
   var MC=(function(){
@@ -810,15 +810,15 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       MC.ACC.forEach(function(a,i){
         var b=document.createElement('button');b.type='button';b.className='code-thumb';b.setAttribute('role','tab');b.setAttribute('aria-selected',String(a===sel));b.tabIndex=(a===sel||(!sel&&i===0))?0:-1;
         b.innerHTML='<span class="ct-img">'+(draft[a]?'<img src="'+draft[a]+'" alt="">':'<span class="ct-empty">vacío</span>')+'</span><span class="ct-name">'+MC.ACC_TXT[a]+'</span>';
-        b.setAttribute('aria-label','Espacio '+MC.ACC_TXT[a]+(draft[a]?' (con dibujo)':' (sin dibujo)'));
+        b.setAttribute('aria-label','Acción '+MC.ACC_TXT[a]+(draft[a]?' (con dibujo)':' (sin dibujo)'));
         b.addEventListener('click',function(){select(a);});
         b.addEventListener('keydown',function(e){var to=null;if(e.key==='ArrowDown'||e.key==='ArrowRight')to=(i+1)%4;else if(e.key==='ArrowUp'||e.key==='ArrowLeft')to=(i+3)%4;if(to!==null){e.preventDefault();select(MC.ACC[to]);thumbs.children[to].focus();}});
         thumbs.appendChild(b);
       });
     }
     function paint(){ctx.fillStyle='#fff';ctx.fillRect(0,0,240,240);var d=draft[sel];if(d){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,240,240);};im.src=d;}}
-    function select(a){sel=a;nameEl.textContent=a?MC.ACC_TXT[a]:'ninguno';cv.setAttribute('aria-label','Espacio para dibujar el símbolo de: '+MC.ACC_TXT[a]);var i=MC.ACC.indexOf(a);if(prevB)prevB.disabled=i===0;if(nextB)nextB.disabled=i===3;renderThumbs();paint();}
-    var drawing=false,last=null;var saveB=host.querySelector('[data-t="guardar"]'),saveSt=host.querySelector('.code-save-st');function setDirty(v){dirty=v;if(saveSt){saveSt.textContent=v?'Hay cambios sin guardar.':'Código guardado.';saveSt.className='code-save-st '+(v?'pend':'ok');}}if(saveB)saveB.addEventListener('click',function(){MC.ACC.forEach(function(a){st.codigo[a]=draft[a];});MC.save();setDirty(false);});if(MC.ACC.some(function(a){return draft[a];}))setDirty(false);
+    function select(a){sel=a;nameEl.textContent=a?MC.ACC_TXT[a]:'ninguno';cv.setAttribute('aria-label','Lienzo para dibujar el símbolo de: '+MC.ACC_TXT[a]);var i=MC.ACC.indexOf(a);if(prevB)prevB.disabled=i===0;if(nextB)nextB.disabled=i===3;renderThumbs();paint();}
+    var drawing=false,last=null;var saveB=host.querySelector('[data-t="guardar"]'),saveSt=host.querySelector('.code-save-st');function setDirty(v){dirty=v;if(saveSt){saveSt.textContent=v?'Hay cambios sin guardar.':'Código guardado.';saveSt.className='code-save-st '+(v?'pend':'ok');}}if(saveB)saveB.addEventListener('click',function(){var ti=host.querySelector('[data-t="equipo"]');if(ti&&!ti.value.trim()){if(saveSt){saveSt.textContent='Falta el nombre del equipo.';saveSt.className='code-save-st pend';}ti.focus();return;}MC.ACC.forEach(function(a){st.codigo[a]=draft[a];});MC.save();setDirty(false);});if(MC.ACC.some(function(a){return draft[a];}))setDirty(false);
     (function(){var teamIn=host.querySelector('[data-t="equipo"]'),TK='stemplus.micodigo.equipo';if(teamIn){try{teamIn.value=localStorage.getItem(TK)||'';}catch(e){}teamIn.addEventListener('input',function(){try{localStorage.setItem(TK,teamIn.value);}catch(e){}});}
       function team(){return teamIn?teamIn.value.replace(/\s+/g,' ').trim():'';}
       var dlB=host.querySelector('[data-t="descargar"]'),upB=host.querySelector('[data-t="cargar"]'),fin=host.querySelector('[data-t="archivo"]');if(!dlB||!upB||!fin)return;
@@ -867,13 +867,13 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       out.textContent='Se movió el dibujo del espacio “'+MC.ACC_TXT[sel]+'” al espacio “'+MC.ACC_TXT[b2]+'”.';select(b2);}
     if(prevB)prevB.addEventListener('click',function(){move(-1);});if(nextB)nextB.addEventListener('click',function(){move(1);});
     host.querySelector('[data-t="probar"]').addEventListener('click',function(){
-      if(mini.busy)return;if(!sel){out.textContent='Primero toquen una acción de la lista “Espacios”: Avanzar, Girar a la derecha, Girar a la izquierda o Detenerse.';return;}mini.busy=true;var a=sel;
+      if(mini.busy)return;if(!sel){out.textContent='Primero toquen una acción de la lista “Acciones”: Avanzar, Girar a la derecha, Girar a la izquierda o Detenerse.';return;}mini.busy=true;var a=sel;
       mini.run([{a:a,n:1}],function(){},function(r){mini.busy=false;mini.draw();
         var accion={AVANZAR:'avanzar una casilla',GIRAR_DERECHA:'girar a la derecha',GIRAR_IZQUIERDA:'girar a la izquierda',DETENER:'detenerse (el robot no se mueve)'}[a];
-        out.innerHTML='<span class="q">Entrada:</span> se tocó “'+MC.ACC_TXT[a]+'”.<br><span class="q">Acción:</span> '+accion+(r.error?' (no se completó: '+r.error+')':'')+'.<br>Importa el espacio, no el dibujo.';
+        out.innerHTML='<span class="q">Entrada:</span> se tocó “'+MC.ACC_TXT[a]+'”.<br><span class="q">Acción:</span> '+accion+(r.error?' (no se completó: '+r.error+')':'')+'.<br>Importa la acción, no el dibujo.';
       },true);
     });
-    host.querySelector('[data-mini-reset]').addEventListener('click',function(){mini.reset();out.textContent='Toquen una acción de la lista “Espacios” y después “Probar este espacio”.';});
+    host.querySelector('[data-mini-reset]').addEventListener('click',function(){mini.reset();out.textContent='Toquen una acción de la lista y después “Probar esta acción”.';});
     MC.onChange(function(){if(!dirty)MC.ACC.forEach(function(a){draft[a]=st.codigo[a]||null;});renderThumbs();if(!drawing)paint();});
     select(null);
   })();
