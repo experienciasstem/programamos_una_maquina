@@ -82,14 +82,14 @@ html.emb .card .btn .txtBtn{display:none}html.emb main{padding:8px 16px 0}html.e
   <section id="vInicio" hidden>
     <div class="caja">
       <h2>Entrar al muro de la clase</h2>
-      <label>Código del muro<input type="text" class="codigo" id="codEntrar" maxlength="6" autocomplete="off" placeholder="ABC123"></label>
+      <label>Clave del muro<input type="text" class="codigo" id="codEntrar" maxlength="6" autocomplete="off" placeholder="ABC123"></label>
       <button type="button" class="btn pri" id="entrar">Entrar</button>
       <p class="msg" id="msgEntrar" aria-live="polite"></p>
-      <p class="txt soloEmb">El código del muro lo da la docente.</p>
+      <p class="txt soloEmb">La clave del muro la da la docente.</p>
     </div>
     <div class="caja" id="cajaCrear">
       <h2>¿Es docente? Cree el muro de su clase</h2>
-      <p class="txt">Se crea un código para su clase. Escríbalo en el pizarrón: los equipos lo usan para entrar desde cualquier dispositivo.</p>
+      <p class="txt">Se crea una clave para su clase. Escríbala en el pizarrón: los equipos lo usan para entrar desde cualquier dispositivo.</p>
       <label>Nombre de la clase<input type="text" id="nombreClase" maxlength="60" autocomplete="off" placeholder="Ej.: 2.º B · Escuela 12"></label>
       <button type="button" class="btn" id="crear" disabled>Crear el muro de mi clase</button>
       <p class="msg" id="msgCrear" aria-live="polite"></p>
@@ -98,7 +98,7 @@ html.emb .card .btn .txtBtn{display:none}html.emb main{padding:8px 16px 0}html.e
 
   <!-- MURO -->
   <section id="vMuro" hidden>
-    <div class="cod"><span id="nomClase"></span><span>Código del muro:</span><b id="codMuro"></b><a class="btn" href="#" id="salir">Salir del muro</a></div>
+    <div class="cod"><span id="nomClase"></span><span>Clave del muro:</span><b id="codMuro"></b><a class="btn" href="#" id="salir">Salir del muro</a></div>
     <div class="caja" aria-labelledby="t-subir">
       <h2 id="t-subir">Subir el código del equipo</h2>
       <label>Nombre del equipo<input type="text" id="equipo" maxlength="40" autocomplete="off" placeholder="Ej.: Los Robots"></label>
@@ -169,7 +169,7 @@ async function ruta(){
   if(!id){muroId=null;$('vMuro').hidden=true;$('vInicio').hidden=false;return;}
   try{
     const m=await DB.leer(id);
-    if(!m){location.hash='';$('msgEntrar').textContent='No encontramos un muro con ese código. Revisen las letras y los números.';$('msgEntrar').className='msg bad';return;}
+    if(!m){location.hash='';$('msgEntrar').textContent='No encontramos un muro con esa clave. Revisen las letras y los números.';$('msgEntrar').className='msg bad';return;}
     muroId=id;$('codMuro').textContent=id;$('nomClase').textContent=m.nombre?m.nombre+' ·':'';
     $('vInicio').hidden=true;$('vMuro').hidden=false;cargar();
   }catch(e){$('msgEntrar').textContent='No se pudo abrir el muro. Revisen la conexión a internet.';$('msgEntrar').className='msg bad';}
@@ -178,7 +178,7 @@ window.addEventListener('hashchange',ruta);
 
 $('codEntrar').addEventListener('keydown',e=>{if(e.key==='Enter')$('entrar').click();});
 $('entrar').addEventListener('click',()=>{const c=$('codEntrar').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
-  if(c.length!==6){$('msgEntrar').textContent='El código tiene 6 letras y números.';$('msgEntrar').className='msg bad';return;}
+  if(c.length!==6){$('msgEntrar').textContent='La clave tiene 6 letras y números.';$('msgEntrar').className='msg bad';return;}
   $('msgEntrar').textContent='';location.hash=c;});
 $('nombreClase').addEventListener('input',()=>{$('crear').disabled=!limpiar($('nombreClase').value);});
 $('crear').addEventListener('click',async()=>{$('crear').disabled=true;$('msgCrear').textContent='Creando…';$('msgCrear').className='msg ok';
@@ -193,15 +193,15 @@ const listo=()=>{bSubir.disabled=!(dato&&limpiar(eq.value));};
 eq.addEventListener('input',listo);
 $('elegir').addEventListener('click',()=>fin.click());
 fin.addEventListener('change',()=>{const f=fin.files&&fin.files[0];fin.value='';dato=null;listo();if(!f)return;
-  $('nombreArchivo').textContent=f.name;say('Leyendo «'+f.name+'»…',true);
+  $('nombreArchivo').textContent=f.name;say('Leyendo “'+f.name+'”…',true);
   const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
-      if(im.naturalWidth!==1120||im.naturalHeight!==430){say('Esa imagen no es un código descargado de «Mi código».',false);return;}
+      if(im.naturalWidth!==1120||im.naturalHeight!==430){say('Esa imagen no es un código descargado de “Mi código”.',false);return;}
       if(r.result.length>900000){say('La imagen es demasiado pesada.',false);return;}
-      dato=r.result;say('Imagen lista. Toquen «Subir al muro».',true);listo();};
+      dato=r.result;say('Imagen lista. Toquen “Subir al muro”.',true);listo();};
     im.onerror=()=>say('No se pudo leer la imagen.',false);im.src=r.result;};
   r.readAsDataURL(f);});
 bSubir.addEventListener('click',async()=>{bSubir.disabled=true;say('Subiendo…',true);const n=limpiar(eq.value);
-  try{await DB.subir(muroId,n,dato);say('¡Listo! El código de «'+n+'» está en el muro.',true);dato=null;$('nombreArchivo').textContent='Ninguna imagen elegida';cargar();}
+  try{await DB.subir(muroId,n,dato);say('¡Listo! El código de “'+n+'” está en el muro.',true);dato=null;$('nombreArchivo').textContent='Ninguna imagen elegida';cargar();}
   catch(e){say('No se pudo subir. Prueben de nuevo.',false);listo();}});
 
 /* ---------- Mostrar ---------- */
@@ -215,7 +215,7 @@ async function cargar(){const m=$('muro');
       const a=document.createElement('a');a.className='btn pri';a.innerHTML='⬇<span class="txtBtn"> Descargar</span>';a.setAttribute('aria-label','Descargar el código de '+c.equipo);a.title='Descargar';a.href=c.img;a.download='codigo_'+c.slug+'.png';
       d.appendChild(a);m.appendChild(d);});
     window.paginar&&window.paginar();
-  }catch(e){m.innerHTML='<p class="vacio">No se pudo cargar el muro. Toquen «Actualizar».</p>';}}
+  }catch(e){m.innerHTML='<p class="vacio">No se pudo cargar el muro. Toquen “Actualizar”.</p>';}}
 $('actualizar').addEventListener('click',cargar);
 let pag=0;
 const porPag=()=>window.innerWidth<=640?6:8;
