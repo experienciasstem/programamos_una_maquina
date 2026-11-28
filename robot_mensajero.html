@@ -135,7 +135,7 @@ img{max-width:100%}
 .sim-head h3{margin:0;font-size:26px;color:var(--amarillo)}
 .sim-head .tag{font-size:16px;font-weight:700;background:rgba(255,255,255,.12);border-radius:999px;padding:4px 10px}
 .sim-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;padding:20px}
-.board-wrap{position:relative}
+.board-wrap{position:relative}/*num*/.board.num{background:transparent;border:0;border-radius:0}.board .coord{font-family:Archivo,Arial,sans-serif;font-weight:700;font-size:30px;fill:#153244}
 .board{display:block;width:100%;height:auto;background:#f4fbfa;border-radius:14px;border:3px solid var(--azul)}
 .board .cell{fill:#f4fbfa;stroke:var(--verde2);stroke-width:2}
 .board .obst{fill:var(--azul)}
@@ -155,7 +155,7 @@ img{max-width:100%}
 .input-row input{flex:1;min-width:0;font:inherit;font-size:22px;padding:12px 14px;border:2px solid var(--azul);border-radius:12px;background:#fff}
 .mic-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .mic-btn{width:56px;height:56px;border-radius:50%;border:3px dashed #94a3b8;background:#f1f5f9;display:grid;place-items:center;cursor:not-allowed;color:#64748b}
-.mic-btn svg{width:26px;height:26px}.mic-btn{border:3px solid #153244;background:#fff;color:#153244;cursor:pointer;transition:background .15s}.mic-btn:hover{background:#8DE2D6}.mic-btn:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}.mic-btn.listening{background:#FFCC00;animation:micpulse 1.2s ease-out infinite}.mic-btn:disabled{border:3px dashed #94a3b8;background:#f1f5f9;color:#94a3b8;cursor:not-allowed}/*rm2*/.mic-modal{position:absolute;inset:0;z-index:50;background:rgba(21,50,68,.45);display:grid;place-items:center;border-radius:inherit;padding:16px}.mm-card{background:#fff;border-radius:16px;max-width:480px;width:100%;padding:16px 20px;box-shadow:0 12px 36px rgba(0,0,0,.25);text-align:center}.mm-ico{width:44px;height:44px;margin:0 auto 6px;border-radius:50%;background:#FFCC00;color:#153244;display:grid;place-items:center}.mm-ico svg{width:28px;height:28px}.mm-card h4{margin:2px 0 6px;font-size:21px;color:#153244}.mm-card p{margin:0 0 6px;font-size:17px;line-height:1.4;color:#334155}.mm-btns{display:flex;justify-content:center;gap:10px;margin-top:12px}.sim-controls{flex-wrap:nowrap}.board-legend{flex-wrap:nowrap}@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(255,204,0,.65)}100%{box-shadow:0 0 0 16px rgba(255,204,0,0)}}@media(prefers-reduced-motion:reduce){.mic-btn.listening{animation:none}}#cmd.listening{border-color:#FFCC00;background:#FFFBEA}#cmd::placeholder{color:#64748b}.src-voz{font-size:.85em;color:#475569;font-style:normal}
+.mic-btn svg{width:26px;height:26px}.mic-btn{border:3px solid #153244;background:#fff;color:#153244;cursor:pointer;transition:background .15s}.mic-btn:hover{background:#8DE2D6}.mic-btn:focus-visible{outline:3px solid #FFCC00;outline-offset:2px}.mic-btn.mic-on{box-shadow:0 0 0 3px #3fa66b}.mic-btn.listening{background:#FFCC00;animation:micpulse 1.2s ease-out infinite}.mic-btn:disabled{border:3px dashed #94a3b8;background:#f1f5f9;color:#94a3b8;cursor:not-allowed}/*rm2*/.mic-modal{position:absolute;inset:0;z-index:50;background:rgba(21,50,68,.45);display:grid;place-items:center;border-radius:inherit;padding:16px}.mm-card{background:#fff;border-radius:16px;max-width:480px;width:100%;padding:16px 20px;box-shadow:0 12px 36px rgba(0,0,0,.25);text-align:center}.mm-ico{width:44px;height:44px;margin:0 auto 6px;border-radius:50%;background:#FFCC00;color:#153244;display:grid;place-items:center}.mm-ico svg{width:28px;height:28px}.mm-card h4{margin:2px 0 6px;font-size:21px;color:#153244}.mm-card p{margin:0 0 6px;font-size:17px;line-height:1.4;color:#334155}.mm-btns{display:flex;justify-content:center;gap:10px;margin-top:12px}.sim-controls{flex-wrap:nowrap}.board-legend{flex-wrap:nowrap}@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(255,204,0,.65)}100%{box-shadow:0 0 0 16px rgba(255,204,0,0)}}@media(prefers-reduced-motion:reduce){.mic-btn.listening{animation:none}}#cmd.listening{border-color:#FFCC00;background:#FFFBEA}#cmd::placeholder{color:#64748b}.src-voz{font-size:.85em;color:#475569;font-style:normal}
 .mic-note{font-size:17px;color:#475569;line-height:1.45;flex:1;min-width:180px}
 .mic-note strong{color:var(--azul)}
 
@@ -541,7 +541,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
     <div class="sim-grid">
       <div>
         <div class="board-wrap">
-          <svg class="board" id="board" viewBox="0 0 600 500" role="img" aria-labelledby="board-desc">
+          <svg class="board num" id="board" viewBox="-46 -46 646 546" role="img" aria-labelledby="board-desc">
             <desc id="board-desc">Tablero cuadriculado de 6 columnas y 5 filas con el robot, el destino y obstáculos.</desc>
             <g id="cells"></g>
             <g id="dest"></g>
@@ -632,6 +632,9 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
   var cellsG=document.getElementById('cells'),destG=document.getElementById('dest'),robot=document.getElementById('robot'),robotRot=document.getElementById('robot-rot');
   function el(n,a){var e=document.createElementNS(svgNS,n);for(var k in a)e.setAttribute(k,a[k]);return e;}
   for(var y=0;y<ROWS;y++)for(var x=0;x<COLS;x++){cellsG.appendChild(el('rect',{x:x*CELL,y:y*CELL,width:CELL,height:CELL,'class':'cell'}));}
+  cellsG.appendChild(el('rect',{x:0,y:0,width:COLS*CELL,height:ROWS*CELL,rx:12,fill:'none',stroke:'#153244','stroke-width':6}));
+  for(var cx=0;cx<COLS;cx++){var tc=el('text',{x:cx*CELL+50,y:-13,'text-anchor':'middle','class':'coord'});tc.textContent=cx+1;cellsG.appendChild(tc);}
+  for(var ry=0;ry<ROWS;ry++){var tr=el('text',{x:-23,y:ry*CELL+61,'text-anchor':'middle','class':'coord'});tr.textContent=ry+1;cellsG.appendChild(tr);}
   OBST.forEach(function(o){
     cellsG.appendChild(el('rect',{x:o.x*CELL+14,y:o.y*CELL+14,width:CELL-28,height:CELL-28,rx:10,'class':'obst'}));
     cellsG.appendChild(el('path',{d:'M'+(o.x*CELL+30)+' '+(o.y*CELL+30)+'l40 40M'+(o.x*CELL+70)+' '+(o.y*CELL+30)+'l-40 40',stroke:'#8DE2D6','stroke-width':6,'stroke-linecap':'round',opacity:.45}));
@@ -802,10 +805,14 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
     function showDenied(){showModal('El micrófono está bloqueado','<p>Para activarlo, toquen el <strong>candado</strong> que aparece a la izquierda de la dirección de la página, elijan <strong>Micrófono: Permitir</strong> y vuelvan a cargar la página.</p><p>Mientras tanto, pueden escribir la indicación.</p>','Entendido',function(){input.focus();},false);}
     function askFirst(go){showModal('Permiso para usar el micrófono','<p>El navegador va a mostrar un aviso arriba de la pantalla.</p><p>Toquen <strong>Permitir</strong> para que el robot pueda recibir la indicación por el micrófono.</p>','Continuar',go,true);}
     var inFrame=(function(){try{return window.self!==window.top;}catch(e){return true;}})();
-    function inFrameBlocked(){return inFrame&&document.featurePolicy&&document.featurePolicy.allowsFeature&&!document.featurePolicy.allowsFeature('microphone');}
+    function inFrameBlocked(){var pp=document.permissionsPolicy||document.featurePolicy;return !!(inFrame&&pp&&pp.allowsFeature&&!pp.allowsFeature('microphone'));}
     function showFrame(){showModal('Abran el simulador aparte','<p>Dentro de esta página el navegador no deja usar el micrófono.</p><p>Toquen <strong>Abrir en pestaña nueva</strong>: ahí el navegador va a pedir permiso. Para volver, cierren esa pestaña.</p>','Abrir en pestaña nueva',function(){var w=window.open(location.href,'_blank');if(!w)ph('El navegador no dejó abrir otra pestaña: escriban la indicación.',5000);},true);}
+    var micUntil=0,MIN30=30*60*1000;
+    function micState(){var on=Date.now()<micUntil;micB.classList.toggle('mic-on',on);micB.title=on?'Micrófono activado (se apaga solo a los 30 minutos)':'Decir la indicación con el micrófono';}
+    setInterval(micState,30000);
     function withPermission(go){
       if(inFrameBlocked()){showFrame();return;}
+      if(Date.now()>=micUntil){showModal('Activar el micrófono','<p>El micrófono va a quedar disponible durante <strong>30 minutos</strong>. Después se apaga solo y hay que volver a activarlo.</p><p>Solo escucha cuando tocan el botón del micrófono.</p>','Activar',function(){micUntil=Date.now()+MIN30;micState();withPermission(go);},true);return;}
       if(!navigator.permissions||!navigator.permissions.query){askFirst(go);return;}
       navigator.permissions.query({name:'microphone'}).then(function(p){if(p.state==='granted')go();else if(p.state==='denied'){if(inFrame)showFrame();else showDenied();}else askFirst(go);},function(){askFirst(go);});
     }
@@ -815,7 +822,7 @@ body{background:#f8fafc;margin:0;padding:0;font-size:20px}
       withPermission(startRec);
     });
     function startRec(){
-      rec=new SR();rec.lang='es-AR';rec.interimResults=true;rec.maxAlternatives=1;rec.continuous=false;
+      if(Date.now()>=micUntil){micState();return;}rec=new SR();rec.lang='es-AR';rec.interimResults=true;rec.maxAlternatives=1;rec.continuous=false;
       var fin='';err='';var denied=false;
       rec.onstart=function(){listening=true;micB.classList.add('listening');micB.setAttribute('aria-pressed','true');input.classList.add('listening');input.value='';ph('Escuchando… digan la indicación');};
       rec.onresult=function(e){var t='';fin='';for(var i=0;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=e.results[i][0].transcript;}input.value=t;};
