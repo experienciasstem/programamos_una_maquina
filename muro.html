@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Muro de códigos · Experiencias STEM+</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<script>try{if(window.self!==window.top||/[?&]embed/.test(location.search))document.documentElement.classList.add("emb");}catch(e){document.documentElement.classList.add("emb");}</script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Archivo,Arial,sans-serif;background:#F8FAFC;color:#153244}
 header{background:#153244;color:#FFCC00;padding:18px 24px;border-bottom:6px solid #8DE2D6}header h1{margin:0;font-size:28px}header p{margin:4px 0 0;color:#fff;font-size:17px}
@@ -27,6 +28,36 @@ h2.t{font-size:22px;margin:26px 0 10px;display:flex;justify-content:space-betwee
 .vacio{color:#64748b;font-size:18px}
 .prueba{background:#FEE4E2;color:#7A271A;font-weight:700;padding:8px 24px;font-size:15px}
 [hidden]{display:none!important}
+/* ===== Versión compacta dentro de la secuencia (iframe, máx. 500 px) ===== */
+html.emb body{overflow-x:hidden}
+html.emb header{padding:8px 16px;border-bottom-width:4px}html.emb header h1{font-size:20px}html.emb header p{font-size:14px;margin-top:2px}
+html.emb main{padding:10px 16px}
+html.emb #vInicio{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+html.emb .caja{margin-bottom:8px;padding:12px 14px;gap:8px}
+html.emb #vInicio .caja{margin:0;align-content:flex-start}
+html.emb .caja h2{font-size:18px}html.emb .caja p.txt{font-size:16px;line-height:1.35}
+html.emb label{font-size:15px}html.emb input[type=text]{font-size:17px;min-width:0;width:220px}html.emb input.codigo{width:150px}
+html.emb .btn{font-size:16px;padding:8px 14px}
+html.emb .msg{font-size:15px;min-height:1.2em}
+html.emb .cod{padding:6px 12px;margin-bottom:8px;gap:10px}html.emb .cod span{font-size:16px}html.emb .cod b{font-size:24px}
+html.emb .cod .btn{margin-left:auto}
+html.emb h2.t{margin:6px 0 6px;font-size:18px}
+html.emb .grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:6px}
+html.emb .card{flex:0 0 260px;scroll-snap-align:start;padding:8px;gap:5px}
+html.emb .card b{font-size:16px}html.emb .card small{font-size:13px}html.emb .card .btn{padding:6px 10px}
+html.emb .vacio{font-size:16px;margin:4px 0}
+.flechas{display:none;gap:6px}html.emb .flechas{display:flex}
+html.emb header p{display:none}html.emb header{padding:6px 16px}html.emb header h1{font-size:19px}
+html.emb #vMuro .caja h2{display:none}html.emb #nombreArchivo{display:none}
+html.emb #vMuro .caja{flex-wrap:nowrap;align-items:flex-end;padding:8px 12px;margin-bottom:4px}
+html.emb #vMuro .caja label{flex:1}html.emb #vMuro .caja input{width:100%}
+html.emb #vMuro .caja .btn{white-space:nowrap}
+html.emb #msg{margin:0 0 2px 4px}
+html.emb .cod{margin-bottom:6px;padding:4px 12px}html.emb .cod .btn{padding:5px 12px}
+html.emb h2.t .btn{padding:5px 10px}
+@media(max-width:640px){html.emb #vMuro .caja{flex-wrap:wrap}}
+html.emb #cajaCrear{display:none}html.emb #vInicio{grid-template-columns:1fr}.soloEmb{display:none}html.emb .soloEmb{display:block}
+
 </style></head>
 <body>
 <header><h1>Muro de códigos</h1><p>Experiencias STEM+ · ¿Qué pasa cuando programamos una máquina?</p></header>
@@ -39,8 +70,9 @@ h2.t{font-size:22px;margin:26px 0 10px;display:flex;justify-content:space-betwee
       <label>Código del muro<input type="text" class="codigo" id="codEntrar" maxlength="6" autocomplete="off" placeholder="ABC123"></label>
       <button type="button" class="btn pri" id="entrar">Entrar</button>
       <p class="msg" id="msgEntrar" aria-live="polite"></p>
+      <p class="txt soloEmb">El código del muro lo da la docente.</p>
     </div>
-    <div class="caja">
+    <div class="caja" id="cajaCrear">
       <h2>¿Es docente? Cree el muro de su clase</h2>
       <p class="txt">Se crea un código para su clase. Escríbalo en el pizarrón: los equipos lo usan para entrar desde cualquier dispositivo.</p>
       <label>Nombre de la clase<input type="text" id="nombreClase" maxlength="60" autocomplete="off" placeholder="Ej.: 2.º B · Escuela 12"></label>
@@ -59,10 +91,10 @@ h2.t{font-size:22px;margin:26px 0 10px;display:flex;justify-content:space-betwee
       <input type="file" id="archivo" accept="image/png" hidden>
       <span class="archivo" id="nombreArchivo">Ninguna imagen elegida</span>
       <button type="button" class="btn pri" id="subir" disabled>Subir al muro</button>
-      <p class="msg" id="msg" aria-live="polite"></p>
     </div>
-    <h2 class="t"><span>Códigos de la clase</span><button type="button" class="btn" id="actualizar">↻ Actualizar</button></h2>
-    <div class="grid" id="muro" aria-live="polite"></div>
+    <p class="msg" id="msg" aria-live="polite"></p>
+    <h2 class="t"><span>Códigos de la clase</span><span class="flechas"><button type="button" class="btn" id="izq" aria-label="Ver códigos anteriores">◀</button><button type="button" class="btn" id="der" aria-label="Ver más códigos">▶</button></span><button type="button" class="btn" id="actualizar">↻ Actualizar</button></h2>
+    <div class="grid" id="muro" aria-live="polite" tabindex="0" aria-label="Códigos de la clase"></div>
   </section>
 </main>
 
@@ -146,7 +178,7 @@ const listo=()=>{bSubir.disabled=!(dato&&limpiar(eq.value));};
 eq.addEventListener('input',listo);
 $('elegir').addEventListener('click',()=>fin.click());
 fin.addEventListener('change',()=>{const f=fin.files&&fin.files[0];fin.value='';dato=null;listo();if(!f)return;
-  $('nombreArchivo').textContent=f.name;
+  $('nombreArchivo').textContent=f.name;say('Leyendo «'+f.name+'»…',true);
   const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
       if(im.naturalWidth!==1120||im.naturalHeight!==430){say('Esa imagen no es un código descargado de «Mi código».',false);return;}
       if(r.result.length>900000){say('La imagen es demasiado pesada.',false);return;}
@@ -169,6 +201,9 @@ async function cargar(){const m=$('muro');
       d.appendChild(a);m.appendChild(d);});
   }catch(e){m.innerHTML='<p class="vacio">No se pudo cargar el muro. Toquen «Actualizar».</p>';}}
 $('actualizar').addEventListener('click',cargar);
+$('izq').addEventListener('click',()=>$('muro').scrollBy({left:-270,behavior:'smooth'}));
+$('der').addEventListener('click',()=>$('muro').scrollBy({left:270,behavior:'smooth'}));
+$('muro').addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('der').click();if(e.key==='ArrowLeft')$('izq').click();});
 ruta();
 </script>
 </body></html>
